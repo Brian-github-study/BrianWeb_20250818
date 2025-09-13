@@ -1,0 +1,21 @@
+{
+  "name": "brianweb_20250818",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tiptap/core": "^3.3.0",
+    "@tiptap/extension-heading": "^3.4.1",
+    "@tiptap/pm": "^3.3.0",
+    "@tiptap/starter-kit": "^3.3.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.1",
+    "notion-page-to-html": "^1.2.0"
+  }
+}

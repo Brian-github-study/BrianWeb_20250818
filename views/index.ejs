@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部落格首頁</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/tiptapstyle.css">
+</head>
+<body>
+
+
+  <header class="page-header">
+    
+    <nav >
+      <div>
+        <h2 style="margin: 0;">周博偉的網路日誌</h2>
+        <ul >
+          <li style="list-style: none; float: left;">
+            <a href="/" style="text-decoration: none;"> home |</a>
+          </li>
+          <li style="list-style: none;">
+            <a href="/newposts" style="text-decoration: none;">&nbsp;posts add</a>
+          </li>
+        </ul>
+      </div>
+      <hr>
+    </nav>
+    
+  </header>
+
+  <section>
+    <h2>文章列表</h2>
+    <div class="excerpt">
+      <ul id="posts-container" class="cards">
+      <!-- JS 會動態生成文章卡片 -->
+      </ul>
+    </div>
+    
+  </section>
+<!-- JS 會動態生成專案卡片 -->
+  <!-- <section>
+    <h2>專案列表</h2>
+    <ul id="projects-container" class="cards">
+      
+    </ul>
+  </section> -->
+  <!-- 新增資料表單 -->
+    <!-- <h4>新增專案</h4>
+    <form action="/projects/add" method="POST">
+      <label>projectsname: <input type="text" name="name" required></label>
+      <label>description: <input type="text" name="description" required></label>
+      <label>link: <input type="text" name="link"></label>
+      <button type="submit">新增</button>
+    </form> -->
+    <!-- ---------------------------------------------------------- -->
+
+  <script src="/main.js"></script>
+</body>
+</html>
