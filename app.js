@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // link to mongodb
-mongoose.connect(MONGODB_URI).then(() => {
+mongoose.connect('mongodb://localhost:27017/BrianWeb_20250818').then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);

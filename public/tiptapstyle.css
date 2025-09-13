@@ -31,13 +31,6 @@
     .excerpt h3 {
       font-size: 1.1rem;
     }
-
-    .excerpt h4,
-    .excerpt h5,
-    .excerpt h6 {
-      font-size: 1rem;
-    }
-
     .excerpt code {
       background-color: #eee;
       border-radius: 0.4rem;
@@ -72,8 +65,4 @@
       border: none;
       border-top: 1px solid #ddd;
       margin: 2rem 0;
-    }
-
-    .excerpt .is-active {
-      background-color: #ddd;
     }

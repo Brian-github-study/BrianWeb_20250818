@@ -22,7 +22,7 @@ body {
   margin: 0.5rem;
  }
 
-.cards {
+ #posts-container.cards {
   display: flex;
   /* flex-wrap: ; */
   flex-direction: column;
@@ -34,29 +34,21 @@ body {
   
 }
 
-.cards li {
+ #posts-container.cards > li {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  /* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */
   padding: 16px;
   width: 60%;
   transition: 0.2s;
 }
 
-.cards li:hover {
+ #posts-container.cards >li:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.cards li a {
+ #posts-container.cards >li a {
   text-decoration: none;
   color: #0070f3;
-}
-
-.cards li p {
-  margin-top: 8px;
-  line-height: 1.4;
-}
-hr {
-  margin: 0px;
 }
