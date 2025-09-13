@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const Post = require('./models/post');
 const User = require('./models/user');
 const Project = require('./models/project');
-
+const MONGODB_URI = "mongodb+srv://Brian:Brianmongodbatls704@cluster0.zrxrtjd.mongodb.net/BrianWeb_20250818?retryWrites=true&w=majority&appName=Cluster0";
 app.set('view engine', 'ejs');
 // 美化 retrurn 的 JSON 
 app.set('json spaces', 2);
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // link to mongodb
-mongoose.connect('mongodb://localhost:27017/BrianWeb_20250818').then(() => {
+mongoose.connect(MONGODB_URI).then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);
