@@ -95,6 +95,7 @@ app.get('/postdelete/:id', async (req, res) => {
   const {id} = req.params;
   try {
     const result = await Post.findByIdAndDelete(id);
+    console.log("DeletePost ID:" + id);
     res.redirect('/');  
 } catch (err) {
     console.error(err);
