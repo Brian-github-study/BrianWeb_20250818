@@ -17,19 +17,19 @@ fetch('/api/posts')
     });
   });
 
-// 專案
-fetch('/api/projects')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('projects-container');
-    const projects = data.project;
-    projects.forEach(proj => {
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <strong><a href="/projects/${proj._id}" target="_blank">${proj.name}</a></strong>
-        <p>${proj.description}</p>
-      `;
-      container.appendChild(li);
-    });
-  });
+// // 專案
+// fetch('/api/projects')
+//   .then(res => res.json())
+//   .then(data => {
+//     const container = document.getElementById('projects-container');
+//     const projects = data.project;
+//     projects.forEach(proj => {
+//       const li = document.createElement('li');
+//       li.innerHTML = `
+//         <strong><a href="/projects/${proj._id}" target="_blank">${proj.name}</a></strong>
+//         <p>${proj.description}</p>
+//       `;
+//       container.appendChild(li);
+//     });
+//   });
 

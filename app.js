@@ -7,15 +7,15 @@ const User = require('./models/user');
 const Project = require('./models/project');
 const MONGODB_URI = "mongodb+srv://Brian:Brianmongodbatls704@cluster0.zrxrtjd.mongodb.net/BrianWeb_20250818?retryWrites=true&w=majority&appName=Cluster0";
 const mongodblink = 'mongodb://localhost:27017/BrianWeb_20250818'
+
 app.set('view engine', 'ejs');
-// 美化 retrurn 的 JSON 
-app.set('json spaces', 2);
+app.set('json spaces', 2);// 美化 retrurn 的 JSON 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
 // link to mongodb
-mongoose.connect(MONGODB_URI).then(() => {
+mongoose.connect(mongodblink).then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);
@@ -33,6 +33,8 @@ app.get('/', async (req, res) => {
 });
 
 // posts create & edit & delete
+
+// post get
 app.get('/api/posts', async (req, res) => {
   try {
     const posts = await Post.find();
@@ -43,16 +45,16 @@ app.get('/api/posts', async (req, res) => {
   }
 });
 
-// post get
-app.get('/api/projects', async (req, res) => {
-  try {
-    const project = await Project.find();
-    res.json({ project });
-    console.log('Projects retrieved successfully');
-  } catch (err) {
-    res.status(500).send('Error retrieving posts');
-  }
-});
+// // projects get
+// app.get('/api/projects', async (req, res) => {
+//   try {
+//     const project = await Project.find();
+//     res.json({ project });
+//     console.log('Projects retrieved successfully');
+//   } catch (err) {
+//     res.status(500).send('Error retrieving posts');
+//   }
+// });
 app.get('/posts/:id', async (req, res) => {
   const {id} = req.params;
   const post = await Post.findById(id);
@@ -82,7 +84,7 @@ app.put('/posts/:id', async (req, res) => {
     post.content = content;
     await post.save();
 
-    console.log('Post edit successfully');
+    console.log('Edit post successfully ID:' + id);
     res.json({ success: true })
   } catch (err) {
     console.error(err);
@@ -95,48 +97,50 @@ app.get('/postdelete/:id', async (req, res) => {
   const {id} = req.params;
   try {
     const result = await Post.findByIdAndDelete(id);
-    console.log("DeletePost ID:" + id);
+    console.log("Delete Post successfully ID:" + id);
     res.redirect('/');  
-} catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).send('Error deleting post');
   }});
-app.get('/projects/:id', async (req, res) => {
-  const {id} = req.params;
-  const project = await Project.findById(id);
-  console.log("Project ID:" + id);
-  if (!project) return res.status(404).send('專案不存在');
-  res.render('project', { project });
-});
+
+// app.get('/projects/:id', async (req, res) => {
+//   const {id} = req.params;
+//   const project = await Project.findById(id);
+//   console.log("Project ID:" + id);
+//   if (!project) return res.status(404).send('專案不存在');
+//   res.render('project', { project });
+// });
 
 app.get('/newposts', (req, res) => {
 
   res.render('newnew'); 
 });
 
+// post create
 app.post('/posts/add', async (req, res) => {
   const { title, content } = req.body;
   const post = new Post({ title, content });
   try {
     await post.save();
     res.redirect('/');
-    console.log('Post added successfully');
+    console.log('Post added successfully ID:' + post._id);
   } catch (err) {
     res.status(500).send('Error saving post');
   }
 });
 
-app.post('/projects/add', async (req, res) => {
-  const { name, description, link } = req.body;
-  const project = new Project({ name, description, link });
-  try {
-    await project.save();
-    res.redirect('/');
-    console.log('Project added successfully');
-  } catch (err) {
-    res.status(500).send('Error saving post');
-  }
-});
+// app.post('/projects/add', async (req, res) => {
+//   const { name, description, link } = req.body;
+//   const project = new Project({ name, description, link });
+//   try {
+//     await project.save();
+//     res.redirect('/');
+//     console.log('Project added successfully');
+//   } catch (err) {
+//     res.status(500).send('Error saving post');
+//   }
+// });
 app.get('/newnew', (req, res) => {
 
   res.render('newnew'); 
