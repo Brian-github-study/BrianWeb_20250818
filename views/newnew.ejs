@@ -162,13 +162,14 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ content: htmlContent }),
-            });
-            if (response.ok) {
-                alert('Post submitted successfully!');
+            }).then(res => {
+                if (res.status === 201) {
+                alert('Post add successfully!');
                 window.location.href = '/';
-            } else {
+            }else {
                 alert('Failed to submit post.');
-            }
+            }});
+            
         };
     </script>
 </body>

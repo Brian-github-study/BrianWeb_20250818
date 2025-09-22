@@ -164,13 +164,15 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ content: htmlContent }),
-            });
-            if (response.ok) {
-                alert('Post submitted successfully!');
+            }).then(res => {
+                if (res.status === 200) {
+                alert('Post edit successfully!');
                 window.location.href = '/';
             } else {
                 alert('Failed to submit post.');
             }
+            
+        });
         };
     </script>
 </body>

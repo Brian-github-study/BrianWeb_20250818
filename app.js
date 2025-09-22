@@ -85,7 +85,7 @@ app.put('/posts/:id', async (req, res) => {
     await post.save();
 
     console.log('Edit post successfully ID:' + id);
-    res.json({ success: true })
+    res.status(200).end();
   } catch (err) {
     console.error(err);
     res.status(500).send('Error saving post');
@@ -123,7 +123,7 @@ app.post('/posts/add', async (req, res) => {
   const post = new Post({ title, content });
   try {
     await post.save();
-    res.redirect('/');
+    res.status(201).end();
     console.log('Post added successfully ID:' + post._id);
   } catch (err) {
     res.status(500).send('Error saving post');
