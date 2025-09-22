@@ -1,4 +1,5 @@
 {
+  
   "name": "brianweb_20250818",
   "version": "1.0.0",
   "main": "index.js",
@@ -10,7 +11,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@tiptap/core": "^3.3.0",
+    "@tiptap/core": "^3.4.4",
     "@tiptap/extension-heading": "^3.4.1",
     "@tiptap/extension-list": "^3.4.4",
     "@tiptap/extension-text-style": "^3.4.4",
