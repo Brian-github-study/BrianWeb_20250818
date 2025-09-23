@@ -157,22 +157,26 @@
         };
         document.getElementById('confirm').onclick = async () => {
             const htmlContent = editor.getHTML();
-            console.log(htmlContent);
-            const response = await fetch('/posts/add', {
-                method: 'POST',
+             // 從網址上拿到 id，例如 /posts/66e0503b78afc8f1d43f1a88/edit
+            const pathParts = window.location.pathname.split('/');
+            const postId = pathParts[2];  // 第二個元素就是 id
+            const response = await fetch(`/posts/${postId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ content: htmlContent }),
             }).then(res => {
-                if (res.status === 201) {
-                alert('Post add successfully!');
+                if (res.status === 200) {
+                alert('Post edit successfully!');
                 window.location.href = '/';
-            }else {
+            } else {
                 alert('Failed to submit post.');
-            }});
+            }
             
+        });
         };
+    
     </script>
 </body>
 </html>
