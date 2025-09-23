@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Post = require('./models/post');
 const User = require('./models/user');
 const Project = require('./models/project');
+const repofc = require('./repository/repository');
 const MONGODB_URI = "mongodb+srv://Brian:Brianmongodbatls704@cluster0.zrxrtjd.mongodb.net/BrianWeb_20250818?retryWrites=true&w=majority&appName=Cluster0";
 const mongodblink = 'mongodb://localhost:27017/BrianWeb_20250818'
 
@@ -29,7 +30,6 @@ app.get('/', async (req, res) => {
   res.render('index');
   // res.sendFile(__dirname + '/views/index.html');
   console.log('Index page rendered');
-  // console.log(posts);
 });
 
 // posts create & edit & delete
@@ -45,21 +45,9 @@ app.get('/api/posts', async (req, res) => {
   }
 });
 
-// // projects get
-// app.get('/api/projects', async (req, res) => {
-//   try {
-//     const project = await Project.find();
-//     res.json({ project });
-//     console.log('Projects retrieved successfully');
-//   } catch (err) {
-//     res.status(500).send('Error retrieving posts');
-//   }
-// });
 app.get('/posts/:id', async (req, res) => {
   const {id} = req.params;
-  const post = await Post.findById(id);
-  console.log("GetPost ID:" + id);
-  // console.log(post);
+  const post = await repofc.repoGetPost(id);
   if (!post) return res.status(404).send('文章不存在');
   res.render('post', { post });
 });
@@ -75,16 +63,7 @@ app.put('/posts/:id', async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
   try {
-    const post = await Post.findById(id);   // 先找到文章
-    if (!post) {
-      return res.status(404).send('Post not found');
-    }
-
-    post.title = title;
-    post.content = content;
-    await post.save();
-
-    console.log('Edit post successfully ID:' + id);
+    repofc.repoEditPost(id, title, content);
     res.status(200).end();
   } catch (err) {
     console.error(err);
@@ -96,21 +75,13 @@ app.put('/posts/:id', async (req, res) => {
 app.get('/postdelete/:id', async (req, res) => {
   const {id} = req.params;
   try {
-    const result = await Post.findByIdAndDelete(id);
-    console.log("Delete Post successfully ID:" + id);
+    repofc.repoDeletePost(id);
     res.redirect('/');  
   } catch (err) {
     console.error(err);
     res.status(500).send('Error deleting post');
   }});
 
-// app.get('/projects/:id', async (req, res) => {
-//   const {id} = req.params;
-//   const project = await Project.findById(id);
-//   console.log("Project ID:" + id);
-//   if (!project) return res.status(404).send('專案不存在');
-//   res.render('project', { project });
-// });
 
 app.get('/newposts', (req, res) => {
 
@@ -120,9 +91,8 @@ app.get('/newposts', (req, res) => {
 // post create
 app.post('/posts/add', async (req, res) => {
   const { title, content } = req.body;
-  const post = new Post({ title, content });
   try {
-    await post.save();
+    repofc.repoCreatePost(title, content);
     res.status(201).end();
     console.log('Post added successfully ID:' + post._id);
   } catch (err) {
@@ -130,17 +100,7 @@ app.post('/posts/add', async (req, res) => {
   }
 });
 
-// app.post('/projects/add', async (req, res) => {
-//   const { name, description, link } = req.body;
-//   const project = new Project({ name, description, link });
-//   try {
-//     await project.save();
-//     res.redirect('/');
-//     console.log('Project added successfully');
-//   } catch (err) {
-//     res.status(500).send('Error saving post');
-//   }
-// });
+
 app.get('/newnew', (req, res) => {
 
   res.render('newnew'); 
