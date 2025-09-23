@@ -63,7 +63,7 @@ app.put('/posts/:id', async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
   try {
-    repofc.repoEditPost(id, title, content);
+    await repofc.repoEditPost(id, title, content);
     res.status(200).end();
   } catch (err) {
     console.error(err);
@@ -94,7 +94,7 @@ app.post('/posts/add', async (req, res) => {
   try {
     repofc.repoCreatePost(title, content);
     res.status(201).end();
-    console.log('Post added successfully ID:' + post._id);
+    console.log('Post added successfully');
   } catch (err) {
     res.status(500).send('Error saving post');
   }

@@ -114,12 +114,14 @@
     </div>
     <!-- confirm -->
     <button id="confirm">Confirm</button>
+    <input type="hidden" value="<%= JSON.stringify(post) %>" id="postdata">
     <script type="module">
         import { Editor } from 'https://esm.sh/@tiptap/core'
         import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
         import { TextStyle, FontSize } from 'https://esm.sh/@tiptap/extension-text-style'
         import Heading from 'https://esm.sh/@tiptap/extension-heading'
         import { TaskItem, TaskList } from 'https://esm.sh/@tiptap/extension-list'
+        const post = JSON.parse(document.getElementById('postdata').value) ;
         const editor = new Editor({
             element: document.querySelector("#editor-textbox"),
             extensions: [ 
@@ -127,7 +129,7 @@
                 TaskItem.configure({nested: true}), 
                 TaskList,
                 Heading.configure({ levels: [1, 2, 3] })],
-            content: `<%- post.content %>`,
+            content: post.content,
         });
         document.getElementById("btn-undo").onclick = () => editor.chain().focus().undo().run();
         // document.getElementById("btn-undo").addEventListener("mouseover", () => {})
@@ -155,24 +157,21 @@
         };
         document.getElementById('confirm').onclick = async () => {
             const htmlContent = editor.getHTML();
-             // 從網址上拿到 id，例如 /posts/66e0503b78afc8f1d43f1a88/edit
-            const pathParts = window.location.pathname.split('/');
-            const postId = pathParts[2];  // 第二個元素就是 id
-            const response = await fetch(`/posts/${postId}`, {
-                method: 'PUT',
+            console.log(htmlContent);
+            const response = await fetch('/posts/add', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ content: htmlContent }),
             }).then(res => {
-                if (res.status === 200) {
-                alert('Post edit successfully!');
+                if (res.status === 201) {
+                alert('Post add successfully!');
                 window.location.href = '/';
-            } else {
+            }else {
                 alert('Failed to submit post.');
-            }
+            }});
             
-        });
         };
     </script>
 </body>
