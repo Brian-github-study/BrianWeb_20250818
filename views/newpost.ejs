@@ -156,7 +156,7 @@
         document.getElementById('confirm').onclick = async () => {
             const htmlContent = editor.getHTML();
             console.log(htmlContent);
-            const response = await fetch('/posts/add', {
+            const response = await fetch('/post/posts/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

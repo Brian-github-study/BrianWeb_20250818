@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const User = require('../models/user');
-const Project = require('../models/project');
+
 async function repoEditPost(id, title, content) {
     const post = await Post.findById(id);   // 先找到文章
     if (!post) {

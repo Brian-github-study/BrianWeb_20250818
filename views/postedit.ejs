@@ -159,8 +159,8 @@
             const htmlContent = editor.getHTML();
              // 從網址上拿到 id，例如 /posts/66e0503b78afc8f1d43f1a88/edit
             const pathParts = window.location.pathname.split('/');
-            const postId = pathParts[2];  // 第二個元素就是 id
-            const response = await fetch(`/posts/${postId}`, {
+            const postId = pathParts[3];  // 第二個元素就是 id
+            const response = await fetch(`/post/posts/${postId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
