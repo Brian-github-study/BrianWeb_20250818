@@ -1,0 +1,25 @@
+<header class="page-header">
+    <nav >
+      <div>
+        <h2 style="margin: 0;">周博偉的網路日誌</h2>
+            <a href="/" style="text-decoration: none;">home</a>
+            
+            <% if (!user) { %>
+            <a href="/auth/signup" style="text-decoration: none;">signup</a>
+            <a href="/auth/login" style="text-decoration: none;">login</a>
+            <% } %>
+            <% if (user) { %>
+            <a href="/auth/logout" style="text-decoration: none;">logout</a>
+            <a href="/post/newposts" style="text-decoration: none;">posts add</a>
+            <% } %>
+        <!-- <ul >
+          <li style="list-style: none; float: left;">
+                        <a href="/" style="text-decoration: none;"> home |</a>
+          </li>
+          <li style="list-style: none;">
+            <a href="/post/newposts" style="text-decoration: none;">&nbsp;posts add</a>
+          </li>
+        </ul> -->
+      </div>
+    </nav>
+  </header>

@@ -1,12 +1,31 @@
-    const mongoose = require("mongoose");
-    const { Schema } = mongoose;
+const mongoose = require("mongoose");
 
-    // 定義資料庫結構schema
-    const userSchema = Schema({
-        name:{}, 
-        password:{},
-        note:{}
-    });
-    // 建立資料表(collections)，mongoose中稱為 model
-    const user = mongoose.model("user", userSchema);
-    module.exports = user;
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minLength: 3,
+    maxLength: 255,
+  },
+  googleID: {
+    type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  thumbnail: {
+    type: String,
+  },
+  // local login
+  email: {
+    type: String,
+  },
+  password: {
+    type: String,
+    minLength: 8,
+    maxLength: 1024,
+  },
+});
+
+module.exports = mongoose.model("User", userSchema);
