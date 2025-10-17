@@ -52,7 +52,7 @@ app.use('/auth', authRoutes);
 
 app.get('/', async (req, res) => {
   const posts = await Post.find();
-  res.render('index', { user: null });
+  res.render('index', { user: req.user });
   // res.sendFile(__dirname + '/views/index.html');
   console.log('Index page rendered');
 });

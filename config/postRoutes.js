@@ -18,7 +18,7 @@ router.get('/posts/:id', async (req, res) => {
   const {id} = req.params;
   const post = await repofc.repoGetPost(id);
   if (!post) return res.status(404).send('文章不存在');
-  res.render('post', { post });
+  res.render('post', { user: req.user, post });
 });
 
 // post edit
@@ -26,7 +26,7 @@ router.get('/postedit/:id', async (req, res) => {
   const {id} = req.params;
   const post = await Post.findById(id);
   console.log("EditPost ID:" + id);
-  res.render('postedit', { post });
+  res.render('postedit', { user: req.user, post });
 });
 router.put('/posts/:id', async (req, res) => {
   const { id } = req.params;
@@ -53,7 +53,7 @@ router.get('/postdelete/:id', async (req, res) => {
 
 // post create
 router.get('/newposts', (req, res) => {
-  res.render('newpost'); 
+  res.render('newpost', { user: req.user }); 
 });
 router.post('/posts/add', async (req, res) => {
   const { title, content } = req.body;

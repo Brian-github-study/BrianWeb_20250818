@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema({
     minLength: 8,
     maxLength: 1024,
   },
+  level:{
+    type: String,
+    default: "user",
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);

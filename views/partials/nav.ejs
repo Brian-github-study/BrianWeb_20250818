@@ -10,6 +10,8 @@
             <% } %>
             <% if (user) { %>
             <a href="/auth/logout" style="text-decoration: none;">logout</a>
+            <% } %>
+            <% if (user && user.level == "admin") { %>
             <a href="/post/newposts" style="text-decoration: none;">posts add</a>
             <% } %>
         <!-- <ul >
