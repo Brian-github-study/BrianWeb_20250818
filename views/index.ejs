@@ -34,8 +34,10 @@ fetch('/post/api/posts')
       li.innerHTML = `
         <div class="excerpt"><a href="/post/posts/${post._id}">${post.content}</a></div>
         <small>${new Date(post.createdAt).toLocaleString()}</small>
+        <% if (user && user.level == "admin") { %>
         <div><a href="/post/postedit/${post._id}">Edit</a></div>
         <div><a href="/post/postdelete/${post._id}">Delete</a></div>
+        <% } %>
       `;
       container.appendChild(li);
     });
