@@ -12,6 +12,7 @@ body {
   background-color: #ccb;
   overflow: hidden
 }
+
 .page-header a {
   float: left;
   color: black;
@@ -23,35 +24,4 @@ body {
 
 .page-header a:hover {
   background-color: #ddd;
-}
-
- #posts-container.cards {
-  display: flex;
-  /* flex-wrap: ; */
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  list-style: none;
-  
-}
-
- #posts-container.cards > li {
-  background: white;
-  border-radius: 10px;
-  /* box-shadow: 0 2px 10px rgba(0,0,0,0.1); */
-  padding: 16px;
-  width: 60%;
-  transition: 0.2s;
-}
-
- #posts-container.cards >li:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
- #posts-container.cards >li a {
-  text-decoration: none;
-  color: #0070f3;
 }
