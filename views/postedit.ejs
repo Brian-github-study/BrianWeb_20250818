@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
         :root {
-        --black: #2e2b29;
-        --white: #fff;
-        --gray-2: rgba(61, 37, 20, .08);
-        --gray-3: rgba(61, 37, 20, .12);
+            --black: #2e2b29;
+            --white: #fff;
+            --gray-2: rgba(61, 37, 20, .08);
+            --gray-3: rgba(61, 37, 20, .12);
         }
+
         pre {
             background: var(--black);
             border-radius: 0.5rem;
@@ -19,12 +21,14 @@
             margin: 1.5rem 0;
             padding: 0.75rem 1rem;
         }
+
         code {
             background: none;
             color: inherit;
             font-size: 0.8rem;
             padding: 0;
         }
+
         blockquote {
             border-left: 3px solid var(--gray-3);
             margin: 1.5rem 0;
@@ -36,13 +40,16 @@
             border-top: 1px solid var(--gray-2);
             margin: 1rem 0;
         }
-        ul div{
+
+        ul div {
             display: inline-block;
         }
+
         ul[data-type="taskList"] {
             list-style: none;
             padding-left: 0;
         }
+
         .tiptap {
             border: 1px solid #000;
             border-radius: 8px;
@@ -51,7 +58,8 @@
             font-size: 1rem;
             color: #333;
         }
-        li[data-checked="true"] p{
+
+        li[data-checked="true"] p {
             text-decoration: line-through;
             color: gray;
         }
@@ -59,107 +67,109 @@
     <link rel="stylesheet" href="/style.css">
     <!-- <link rel="stylesheet" href="/public/style.css"> -->
 </head>
+
 <body>
     <%- include ("partials/nav") %>
-    <!-- editor -->
-    <div>
-        <!-- 編輯樣式 -->
-        <div style="margin: 0.5rem;">
-            <div id="editor-toolbar">
-                <button id="btn-undo" title="回到上一步">Undo</button>
-                <button id="btn-redo" title="Redo">Redo</button>
-                <button id="btn-clear-nodes" title="Clear nodes marks font-size">Clear</button>
-                <button id="bold-btn" title="Bold">Bold</button>
-                <button id="italic" title="Italic">Italic</button>
-                <button id="btn-strike" title="Strike">Strike</button>
-                <button id="btn-quote" title="Quote">Quote</button>
-                <button id="btn-hr" title="Horizontal Rule">Horizontal Rule</button>
-                <button id="Code-btn" title="Code">Code</button>
-                <button id="order-btn" title="Ordered List">Ordered List</button>
-                <button id="bullet-btn" title="Bullet List">Bullet List</button>
-                <button id="checklist-btn" title="checklist">Check List</button>
-                <select name="" id="font-size-select" title="Font Size">
-                    <option value="12px">12px</option>
-                    <option value="14px">18px</option>
-                    <option value="24px">24px</option>
-                </select>
-                <select name="" id="heading-select" title="Heading Level">
-                    <option value="1">H1</option>
-                    <option value="2">H2</option>
-                    <option value="3">H3</option>
-                </select>
+        <!-- editor -->
+        <div>
+            <!-- 編輯樣式 -->
+            <div style="margin: 0.5rem;">
+                <div id="editor-toolbar">
+                    <button id="btn-undo" title="回到上一步">Undo</button>
+                    <button id="btn-redo" title="Redo">Redo</button>
+                    <button id="btn-clear-nodes" title="Clear nodes marks font-size">Clear</button>
+                    <button id="bold-btn" title="Bold">Bold</button>
+                    <button id="italic" title="Italic">Italic</button>
+                    <button id="btn-strike" title="Strike">Strike</button>
+                    <button id="btn-quote" title="Quote">Quote</button>
+                    <button id="btn-hr" title="Horizontal Rule">Horizontal Rule</button>
+                    <button id="Code-btn" title="Code">Code</button>
+                    <button id="order-btn" title="Ordered List">Ordered List</button>
+                    <button id="bullet-btn" title="Bullet List">Bullet List</button>
+                    <button id="checklist-btn" title="checklist">Check List</button>
+                    <select name="" id="font-size-select" title="Font Size">
+                        <option value="12px">12px</option>
+                        <option value="14px">18px</option>
+                        <option value="24px">24px</option>
+                    </select>
+                    <select name="" id="heading-select" title="Heading Level">
+                        <option value="1">H1</option>
+                        <option value="2">H2</option>
+                        <option value="3">H3</option>
+                    </select>
+                </div>
+            </div>
+            <!-- 編輯區 -->
+            <div>
+                <div id="editor-textbox"></div>
             </div>
         </div>
-        <!-- 編輯區 -->
-        <div>
-            <div id="editor-textbox"></div>
-        </div>
-    </div>
-    <!-- confirm -->
-    <button id="confirm">Confirm</button>
-    <input type="hidden" value="<%= JSON.stringify(post) %>" id="postdata">
-    <script type="module">
-        import { Editor } from 'https://esm.sh/@tiptap/core'
-        import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
-        import { TextStyle, FontSize } from 'https://esm.sh/@tiptap/extension-text-style'
-        import Heading from 'https://esm.sh/@tiptap/extension-heading'
-        import { TaskItem, TaskList } from 'https://esm.sh/@tiptap/extension-list'
-        const post = JSON.parse(document.getElementById('postdata').value) ;
-        const editor = new Editor({
-            element: document.querySelector("#editor-textbox"),
-            extensions: [ 
-                StarterKit, TextStyle, FontSize, 
-                TaskItem.configure({nested: true}), 
-                TaskList,
-                Heading.configure({ levels: [1, 2, 3] })],
-            content: post.content,
-        });
-        document.getElementById("btn-undo").onclick = () => editor.chain().focus().undo().run();
-        // document.getElementById("btn-undo").addEventListener("mouseover", () => {})
-        document.getElementById("btn-redo").onclick = () => editor.chain().focus().redo().run();
-        document.getElementById("btn-clear-nodes").onclick = () => editor.chain().focus().clearNodes().unsetAllMarks().unsetFontSize().run();
-        document.getElementById('bold-btn').onclick = () => editor.chain().focus().toggleBold().run();
-        document.getElementById('italic').onclick = () => editor.chain().focus().toggleItalic().run();
-        document.getElementById("btn-strike").onclick = () => editor.chain().focus().toggleStrike().run();
-        document.getElementById("btn-quote").onclick = () => editor.chain().focus().toggleBlockquote().run();
-        document.getElementById("btn-hr").onclick = () => editor.chain().focus().setHorizontalRule().run();
-        // document.getElementById("btn-bullet").onclick = () => editor.chain().focus().toggleBulletList().run();
-        // document.getElementById("btn-ordered").onclick = () => editor.chain().focus().toggleOrderedList().run();
-        // document.getElementById('Code-btn').onclick = () => editor.chain().focus().toggleCode().run();
-        document.getElementById("Code-btn").onclick = () => editor.chain().focus().toggleCodeBlock().run();
-        document.getElementById('order-btn').onclick = () => editor.chain().focus().toggleOrderedList().run();
-        document.getElementById('bullet-btn').onclick = () => editor.chain().focus().toggleBulletList().run();
-        document.getElementById('checklist-btn').onclick = () => editor.chain().focus().toggleTaskList().run();
-        document.getElementById('font-size-select').onchange = (e) => {
-            const size = e.target.value;
-            editor.chain().focus().setFontSize(size).run();
-        };
-        document.getElementById('heading-select').onchange = (e) => {
-            const _level =parseInt(e.target.value, 10);
-            editor.chain().focus().setHeading({ level: _level }).run();
-        };
-        document.getElementById('confirm').onclick = async () => {
-            const htmlContent = editor.getHTML();
-             // 從網址上拿到 id，例如 /posts/66e0503b78afc8f1d43f1a88/edit
-            const pathParts = window.location.pathname.split('/');
-            const postId = pathParts[3];  // 第二個元素就是 id
-            const response = await fetch(`/post/posts/${postId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ content: htmlContent }),
-            }).then(res => {
-                if (res.status === 200) {
-                alert('Post edit successfully!');
-                window.location.href = '/';
-            } else {
-                alert('Failed to submit post.');
-            }
-            
-        });
-        };
-    
-    </script>
+        <!-- confirm -->
+        <button id="confirm">Confirm</button>
+        <input type="hidden" value="<%= JSON.stringify(post) %>" id="postdata">
+        <script type="module">
+            import { Editor } from 'https://esm.sh/@tiptap/core'
+            import StarterKit from 'https://esm.sh/@tiptap/starter-kit'
+            import { TextStyle, FontSize } from 'https://esm.sh/@tiptap/extension-text-style'
+            import Heading from 'https://esm.sh/@tiptap/extension-heading'
+            import { TaskItem, TaskList } from 'https://esm.sh/@tiptap/extension-list'
+            const post = JSON.parse(document.getElementById('postdata').value);
+            const editor = new Editor({
+                element: document.querySelector("#editor-textbox"),
+                extensions: [
+                    StarterKit, TextStyle, FontSize,
+                    TaskItem.configure({ nested: true }),
+                    TaskList,
+                    Heading.configure({ levels: [1, 2, 3] })],
+                content: post.content,
+            });
+            document.getElementById("btn-undo").onclick = () => editor.chain().focus().undo().run();
+            // document.getElementById("btn-undo").addEventListener("mouseover", () => {})
+            document.getElementById("btn-redo").onclick = () => editor.chain().focus().redo().run();
+            document.getElementById("btn-clear-nodes").onclick = () => editor.chain().focus().clearNodes().unsetAllMarks().unsetFontSize().run();
+            document.getElementById('bold-btn').onclick = () => editor.chain().focus().toggleBold().run();
+            document.getElementById('italic').onclick = () => editor.chain().focus().toggleItalic().run();
+            document.getElementById("btn-strike").onclick = () => editor.chain().focus().toggleStrike().run();
+            document.getElementById("btn-quote").onclick = () => editor.chain().focus().toggleBlockquote().run();
+            document.getElementById("btn-hr").onclick = () => editor.chain().focus().setHorizontalRule().run();
+            // document.getElementById("btn-bullet").onclick = () => editor.chain().focus().toggleBulletList().run();
+            // document.getElementById("btn-ordered").onclick = () => editor.chain().focus().toggleOrderedList().run();
+            // document.getElementById('Code-btn').onclick = () => editor.chain().focus().toggleCode().run();
+            document.getElementById("Code-btn").onclick = () => editor.chain().focus().toggleCodeBlock().run();
+            document.getElementById('order-btn').onclick = () => editor.chain().focus().toggleOrderedList().run();
+            document.getElementById('bullet-btn').onclick = () => editor.chain().focus().toggleBulletList().run();
+            document.getElementById('checklist-btn').onclick = () => editor.chain().focus().toggleTaskList().run();
+            document.getElementById('font-size-select').onchange = (e) => {
+                const size = e.target.value;
+                editor.chain().focus().setFontSize(size).run();
+            };
+            document.getElementById('heading-select').onchange = (e) => {
+                const _level = parseInt(e.target.value, 10);
+                editor.chain().focus().setHeading({ level: _level }).run();
+            };
+            document.getElementById('confirm').onclick = async () => {
+                const htmlContent = editor.getHTML();
+                // 從網址上拿到 id，例如 /posts/66e0503b78afc8f1d43f1a88/edit
+                const pathParts = window.location.pathname.split('/');
+                const postId = pathParts[3];  // 第二個元素就是 id
+                const response = await fetch(`/post/posts/${postId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content: htmlContent }),
+                }).then(res => {
+                    if (res.status === 200) {
+                        alert('Post edit successfully!');
+                        window.location.href = '/';
+                    } else {
+                        alert('Failed to submit post.');
+                    }
+
+                });
+            };
+
+        </script>
 </body>
+
 </html>
